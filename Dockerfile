@@ -22,7 +22,7 @@ RUN	set -x \
 &&	cd /tmp \
 &&	git clone -b master --single-branch https://github.com/vrana/adminer.git  \
 && php /tmp/adminer/compile.php \
-&& mv /tmp/adminer/adminer.php /var/www/html/index.php
+&& mv /tmp/adminer/adminer.php /var/www/html/index.php \
 && rm -rf /tmp/adminer
 
 USER adminer
