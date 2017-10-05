@@ -20,8 +20,10 @@ RUN	set -x \
 &&	apk del .build-deps
 
 RUN	set -x \
-&&	cd /tmp
+&&	cd /tmp \
 &&	git clone https://github.com/vrana/adminer.git
+
+RUN ls -l /tmp/adminer
 
 USER	adminer
 CMD	[ "php", "-S", "[::]:8080", "-t", "/var/www/html" ]
