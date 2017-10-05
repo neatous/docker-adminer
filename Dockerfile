@@ -5,7 +5,6 @@ STOPSIGNAL SIGINT
 RUN	addgroup -S adminer \
 &&	adduser -S -G adminer adminer \
 &&	mkdir -p /var/www/html \
-&&	mkdir -p /var/www/html/plugins-enabled \
 &&	chown -R adminer:adminer /var/www/html
 
 WORKDIR /var/www/html
@@ -21,11 +20,12 @@ RUN	set -x \
 
 RUN	set -x \
 &&	cd /tmp \
-&&	git clone https://github.com/vrana/adminer.git
+&&	git clone -b master --single-branch https://github.com/vrana/adminer.git  \
+&& php /tmp/adminer/compile.php \
+&& mv /tmp/adminer/adminer.php /var/www/html/index.php
+&& rm -rf /tmp/adminer
 
-RUN ls -l /tmp/adminer
-
-USER	adminer
+USER adminer
 CMD	[ "php", "-S", "[::]:8080", "-t", "/var/www/html" ]
 
 EXPOSE 8080
