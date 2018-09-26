@@ -26,7 +26,11 @@ RUN	set -x \
 && mv /tmp/adminer/adminer.php /var/www/html/index.php \
 && rm -rf /tmp/adminer
 
+RUN echo "upload_max_filesize = 50M" >> /tmp/php.ini \
+    && echo "post_max_size = 50M" >> /tmp/php.ini \
+    && echo "memory_limit = 128M" >> /tmp/php.ini
+
 USER adminer
-CMD	[ "php", "-S", "[::]:8080", "-t", "/var/www/html" ]
+CMD	[ "php", "-S", "[::]:8080", "-c", "/tmp/php.ini", "-t", "/var/www/html" ]
 
 EXPOSE 8080
