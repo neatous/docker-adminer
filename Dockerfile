@@ -1,31 +1,31 @@
-FROM dockette/alpine:edge
+FROM 	neatous/phpbase
 
-ENV ADMINER_DG_VERION=1.21.0
-ENV MEMORY=256M
-ENV UPLOAD=2048M
+ENV		ACCEPT_EULA=Y
+ENV 	TERM xterm
 
-RUN echo '@community http://nl.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories && \
-    echo '@testing http://nl.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories && \
-    apk update && apk upgrade && \
-    apk add \
-        wget \
-        ca-certificates \
-        php7@community \
-        php7-session@community \
-        php7-mysqli@community \
-        php7-pgsql@community \
-        php7-json@community && \
-    wget https://github.com/dg/adminer-custom/archive/v$ADMINER_DG_VERION.tar.gz -O /srv/adminer.tgz && \
-    tar zxvf /srv/adminer.tgz --strip-components=1 -C /srv && \
-    rm /srv/adminer.tgz && \
-    apk del wget ca-certificates && \
-    rm -rf /var/cache/apk/*
+ENV 	ADMINER_DG_VERION=1.21.0
+ENV 	MEMORY=256M
+ENV 	UPLOAD=2048M
 
-WORKDIR srv
-EXPOSE 80
+RUN		apt-get update && apt-get -y install unixodbc unixodbc-dev
 
-CMD /usr/bin/php \
-    -d memory_limit=$MEMORY \
-    -d upload_max_filesize=$UPLOAD \
-    -d post_max_size=$UPLOAD \
-    -S 0.0.0.0:80
+RUN		cd /tmp  && \
+		wget https://packages.microsoft.com/debian/10/prod/pool/main/m/msodbcsql17/msodbcsql17_17.5.2.1-1_amd64.deb && \
+		dpkg -i msodbcsql17_17.5.2.1-1_amd64.deb && \
+		rm -f msodbcsql17_17.5.2.1-1_amd64.deb
+
+RUN 	pecl install sqlsrv pdo_sqlsrv && \
+		docker-php-ext-enable sqlsrv pdo_sqlsrv
+
+RUN 	wget https://github.com/dg/adminer-custom/archive/v$ADMINER_DG_VERION.tar.gz -O /srv/adminer.tgz && \
+		tar zxvf /srv/adminer.tgz --strip-components=1 -C /srv && \
+		rm /srv/adminer.tgz
+
+WORKDIR /srv
+EXPOSE 	80
+
+CMD 	php \
+			-d memory_limit=$MEMORY \
+			-d upload_max_filesize=$UPLOAD \
+			-d post_max_size=$UPLOAD \
+			-S 0.0.0.0:80
