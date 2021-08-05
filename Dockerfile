@@ -1,4 +1,4 @@
-FROM 	neatous/phpbase
+FROM 	neatous/phpbase:8.0
 
 ENV	ACCEPT_EULA=Y
 ENV 	TERM xterm
