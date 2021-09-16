@@ -17,6 +17,8 @@ RUN	cd /tmp  && \
 RUN 	pecl install sqlsrv pdo_sqlsrv && \
 	docker-php-ext-enable sqlsrv pdo_sqlsrv
 
+RUN 	sed -i -e 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1.0/g' /etc/ssl/openssl.cnf
+
 RUN 	wget https://github.com/dg/adminer-custom/archive/v$ADMINER_DG_VERION.tar.gz -O /srv/adminer.tgz && \
 	tar zxvf /srv/adminer.tgz --strip-components=1 -C /srv && \
 	rm /srv/adminer.tgz
