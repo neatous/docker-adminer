@@ -10,11 +10,11 @@ RUN echo '@community http://nl.alpinelinux.org/alpine/edge/community' >> /etc/ap
     apk add \
         wget \
         ca-certificates \
-        php7@community \
-        php7-session@community \
-        php7-mysqli@community \
-        php7-pgsql@community \
-        php7-json@community && \
+        php8@community \
+        php8-session@community \
+        php8-mysqli@community \
+        php8-pgsql@community \
+        php8-json@community && \
     wget https://github.com/dg/adminer-custom/archive/v$ADMINER_DG_VERION.tar.gz -O /srv/adminer.tgz && \
     tar zxvf /srv/adminer.tgz --strip-components=1 -C /srv && \
     rm /srv/adminer.tgz && \
