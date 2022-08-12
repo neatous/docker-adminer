@@ -10,9 +10,9 @@ ENV 	UPLOAD=2048M
 RUN	apt-get update && apt-get -y install unixodbc unixodbc-dev
 
 RUN	cd /tmp  && \
-	wget https://packages.microsoft.com/debian/11/prod/pool/main/m/msodbcsql17/msodbcsql17_17.9.1.1-1_amd64.deb && \
-	dpkg -i msodbcsql17_17.9.1.1-1_amd64.deb && \
-	rm -f msodbcsql17_17.9.1.1-1_amd64.deb
+	wget https://packages.microsoft.com/debian/11/prod/pool/main/m/msodbcsql18/msodbcsql18_18.1.1.1-1_amd64.deb && \
+	dpkg -i msodbcsql18_18.1.1.1-1_amd64.deb && \
+	rm -f msodbcsql18_18.1.1.1-1_amd64.deb
 
 RUN 	pecl install sqlsrv pdo_sqlsrv && \
 	docker-php-ext-enable sqlsrv pdo_sqlsrv
