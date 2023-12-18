@@ -8,11 +8,11 @@ RUN apk update && apk upgrade && \
     apk add \
         wget \
         ca-certificates \
-        php82 \
-        php82-session \
-        php82-mysqli \
-        php82-pgsql \
-        php82-json && \
+        php83 \
+        php83-session \
+        php83-mysqli \
+        php83-pgsql \
+        php83-json && \
     wget https://github.com/dg/adminer-custom/archive/v$ADMINER_DG_VERION.tar.gz -O /srv/adminer.tgz && \
     tar zxvf /srv/adminer.tgz --strip-components=1 -C /srv && \
     rm /srv/adminer.tgz && \
@@ -22,7 +22,7 @@ RUN apk update && apk upgrade && \
 WORKDIR srv
 EXPOSE 80
 
-CMD /usr/bin/php82 \
+CMD /usr/bin/php83 \
     -d memory_limit=$MEMORY \
     -d upload_max_filesize=$UPLOAD \
     -d post_max_size=$UPLOAD \
